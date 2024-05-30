@@ -1,0 +1,13 @@
+asgiref==3.7.2
+crispy-bootstrap5==2023.10
+Django==5.0.1
+django-cors-headers==4.3.1
+django-crispy-forms==2.1
+django-restframework==0.0.1
+djangorestframework==3.14.0
+pycairo @ file:///private/tmp/py3cairo-20231211-34246-voo80p/pycairo-1.25.1
+PyGObject==3.46.0
+PyMySQL==1.1.0
+pytz==2023.3.post1
+sqlparse==0.4.4
+whitenoise==6.6.0

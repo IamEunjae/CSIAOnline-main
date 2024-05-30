@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Status</title>
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .wrapper {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(9, 1fr);
+        height: 100vh;
+        background-color: #fff;
+        color: #444;
+        }
+        .box {
+        background-color: rgb(32, 104, 167);
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%;
+
+        }
+
+        .a {
+        grid-column: 1 / 6 span;
+        grid-row: 2 / 8 span ;
+        }
+        .b {
+        grid-column: 7/10 span;
+        grid-row: 2 / 8 span;
+        }
+        .c {
+        grid-column: 1 / 12 span;
+        grid-row: 9;
+        }
+        .d {
+        grid-column: col1-start;
+        grid-row: row1-start / row2-start;
+        }
+
+        #loginContainer {
+            display: grid;
+            align-items: center;
+            padding: 10px;
+        }
+        #userInput {
+            text-align: right;
+        }
+        #reservationStatus {
+            margin-top: 20px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+        table {
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Define your API URL
+          let apiURL = "http://127.0.0.1:8000";
+
+          // Get all the navigation links
+          var navLinks = document.querySelectorAll('.nav-link');
+
+          // Add click event listener to each navigation link
+          navLinks.forEach(function (link) {
+              link.addEventListener('click', function () {
+                  // Update the API URL when a navigation link is clicked
+                  // You can customize this part based on your requirements
+                  var linkValue = link.getAttribute('value');
+                  var redirectLink = apiURL + '/' + linkValue;
+                  // Perform any other actions you need to do on link click
+                  window.location.href = redirectLink
+                  // For demonstration purposes, let's log the updated API URL to the console
+                  console.log("redirecting to ", redirectLink);
+              });
+          });
+      });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+  <div class="wrapper">
+    <!-- ... (unchanged part) ... -->
+    <div class="box a">
+      <div id="reservationStatus">
+        <h2>Reservation Status for Today</h2>
+        <table border="1" class="table table-striped table-hover">
+          <tr>
+            <th>Time Slot</th>
+            <th>Status</th>
+            <th>Make Reservation</th>
+          </tr>
+          {% for Reservation in Reservations %}
+            <tr>
+              <td>{{ Reservation.timeSlot }} {{Reservation.student_id}}</td>
+              <td class="Availability" data-time-slot="{{ Reservation.timeSlot }}">
+                {% if Reservation.student_id == current_student_id %}
+                  Not Available
+                {% else %}
+                  {% if Reservation.availability %}
+                    Available
+                  {% else %}
+                    Not Available
+                  {% endif %}
+                {% endif %}
+              </td>
+              <td>
+                {% if Reservation.student_id == current_student_id %}
+                  <button class="reservation-button" data-time-slot="{{ Reservation.timeSlot }}" data-action="Delete">Delete Reservation</button>
+                {% else %}
+                  {% if Reservation.availability %}
+                    <button class="reservation-button" data-time-slot="{{ Reservation.timeSlot }}" data-action="Make">Make Reservation</button>
+                  {% else %}
+                    <p1>Not Available</p1>
+                  {% endif %}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+    <!-- ... (unchanged part) ... -->
+  </div>
+
+  <script src="../static/student.js"></script>
+{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
+</html>

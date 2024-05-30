@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Yaja Schedule</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .left-half, .right-half {
+            width: 100%;
+            padding: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .left-half, .right-half {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="container">
+        <div class="left-half">
+            <!-- Display context from the backend -->
+            <p>{{ Yaja.period1 }}</p>
+            <p>{{ Yaja.period2 }}</p>
+            <p>{{ Yaja.period3 }}</p>
+        </div>
+        <div class="right-half">
+            <form id="yaja_Form" action="/" method="put">
+                <!-- Period 1 -->
+                <label for="period1">Period 1:</label>
+                <select class="form-control form-control-lg" id="period1" l('period1')">
+                    <option value="yaja">Yaja</option>
+                    <option value="dorm">Dorm</option>
+                    <option value="afterschool">After School</option>
+                    <option value="extraclass">Extra Class</option>
+                    <option value="others">Others</option>
+                </select>
+                <input type="text" id="period1-others-detail" style="display: none;" class="form-control mt-2">
+                <br>
+
+                <!-- Period 2 -->
+                <label for="period2">Period 2:</label>
+                <select class="form-control form-control-lg" id="period2" l('period2')">
+                    <option value="yaja">Yaja</option>
+                    <option value="dorm">Dorm</option>
+                    <option value="afterschool">After School</option>
+                    <option value="extraclass">Extra Class</option>
+                    <option value="others">Others</option>
+                </select>
+                <input type="text" id="period2-others-detail" style="display: none;" class="form-control mt-2">
+                <br>
+
+                <!-- Period 3 -->
+                <label for="period3">Period 3:</label>
+                <select class="form-control form-control-lg" id="period3" l('period3')">
+                    <option value="yaja">Yaja</option>
+                    <option value="dorm">Dorm</option>
+                    <option value="afterschool">After School</option>
+                    <option value="extraclass">Extra Class</option>
+                    <option value="others">Others</option>
+                </select>
+                <input type="text" id="period3-others-detail" style="display: none;" class="form-control mt-2">
+                <br>
+
+                <input type="submit" class="form-control btn btn-primary" value="Submit" name="submit">
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#defaultsetmodal">
+        Set new Default
+    </button>
+    <div class="modal fade" id="defaultsetmodal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleModalLabel">Change Entire Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="scheduleForm">
+                        <!-- Monday -->
+                        <label for="Monday">Monday</label>
+                        <table class="table">
+                            <tr>
+                                <th>Period 1</th>
+                                <th>Period 2</th>
+                                <th>Period 3</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="period1-Monday">Period 1:</label>
+                                    <select class="form-control form-control-lg" id="period1-Monday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period1-Monday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period2-Monday">Period 2:</label>
+                                    <select class="form-control form-control-lg" id="period2-Monday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period2-Monday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period3-Monday">Period 3:</label>
+                                    <select class="form-control form-control-lg" id="period3-Monday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period3-Monday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Repeat similar structure for Tuesday, Wednesday, Thursday, Friday -->
+                        <!-- For brevity, I will show Tuesday only. Repeat for other days -->
+
+                        <label for="Tuesday">Tuesday</label>
+                        <table class="table">
+                            <tr>
+                                <th>Period 1</th>
+                                <th>Period 2</th>
+                                <th>Period 3</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="period1-Tuesday">Period 1:</label>
+                                    <select class="form-control form-control-lg" id="period1-Tuesday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period1-Tuesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period2-Tuesday">Period 2:</label>
+                                    <select class="form-control form-control-lg" id="period2-Tuesday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period2-Tuesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period3-Tuesday">Period 3:</label>
+                                    <select class="form-control form-control-lg" id="period3-Tuesday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period3-Tuesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <label for="Tuesday">Wednesday</label>
+                        <table class="table">
+                            <tr>
+                                <th>Period 1</th>
+                                <th>Period 2</th>
+                                <th>Period 3</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="period1-Wednesday">Period 1:</label>
+                                    <select class="form-control form-control-lg" id="period1-Wednesday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period1-Wednesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period2-Wednesday">Period 2:</label>
+                                    <select class="form-control form-control-lg" id="period2-Wednesday"
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period2-Wednesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period3-Wednesday">Period 3:</label>
+                                    <select class="form-control form-control-lg" id="period3-Wednesday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period3-Wednesday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <label for="Tuesday">Thursday</label>
+                        <table class="table">
+                            <tr>
+                                <th>Period 1</th>
+                                <th>Period 2</th>
+                                <th>Period 3</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="period1-Thursday">Period 1:</label>
+                                    <select class="form-control form-control-lg" id="period1-Thursday"
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period1-Thursday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period2-Thursday">Period 2:</label>
+                                    <select class="form-control form-control-lg" id="period2-Thursday" 
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period2-Thursday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                                <td>
+                                    <label for="period3-Thursday">Period 3:</label>
+                                    <select class="form-control form-control-lg" id="period3-Thursday"
+                                        <option value="yaja">Yaja</option>
+                                        <option value="dorm">Dorm</option>
+                                        <option value="afterschool">After School</option>
+                                        <option value="extraclass">Extra Class</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <input type="text" id="period3-Thursday-others-detail" style="display: none;" class="form-control mt-2">
+                                </td>
+                            </tr>
+                        </table>
+
+                    
+                        <input type="submit" class="btn btn-primary" value="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/yaja.js"></script>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

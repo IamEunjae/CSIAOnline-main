@@ -1,0 +1,9 @@
+1. Red not red...... 
+2. javascript html not included
+3. admin database not include(model not register)
+4. MIDDLEWARE included drf(should have deleted those 2)
+5. assertionError render problem-> should either use Json from django or render from drf
+6. time_slot or timeSlot. --> must add style sheet
+7. when using time to find, make sure timezone is correct Eunjae not mexico city 
+8. cash를 지울것
+9. BLock content end content 안에 넣어

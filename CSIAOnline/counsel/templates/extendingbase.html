@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Reservation Status{% endblock %}
+
+{% block content %}
+    <section id="res-status" class="p-3 bg-primary">
+        <div class="container">
+            <h2 class="text-center text-white mt-3">Current Status</h2>
+            <p class="lead text-center text-white mb-3">
+                Click buttons to make or delete available reservation
+            </p>
+        </div>
+    </section>
+    <div class="row">
+        <section class="col-8">
+            <div class="row justify-content-center">
+            <div class="col-10 my-5">
+            <table class="table align-middle bg-white shadow p-3 text-center">
+                <thead class="bg-light">
+                <tr>
+                    <th>Time Slot</th>
+                    <th>Availability</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                    <div class="d-flex justify-content-center">
+                        <div class="ms-3">
+                        <p class="fw-bold mb-1">1st period</p>
+                        <p class="text-muted mb-0">9:00 ~ 9:50</p>
+                        </div>
+                    </div>
+                    </td>
+                    <td>
+                    <p class="fw-normal mb-1 text-success">Available</p>
+                    </td>
+                    <td>
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded">
+                        Make Reservation
+                    </button>
+                    </td>
+                </tr>
+                <td>
+                    <div class="d-flex justify-content-center">
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">2nd period</p>
+                        <p class="text-muted mb-0">10:00 ~ 10:50</p>
+                    </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1 text-danger">Unavailable</p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary btn-sm btn-rounded">
+                    Make Reservation
+                    </button>
+                </td>
+                </tr>
+                <td>
+                    <div class="d-flex justify-content-center">
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">3rd period</p>
+                        <p class="text-muted mb-0">11:00 ~ 11:50</p>
+                    </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1 text-success">Available</p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded">
+                    Make Reservation
+                    </button>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            </div>
+        </section>
+        <section class="col-3 my-5" >
+            <div id="teacherinfo" class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://randomuser.me/api/portraits/women//13.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+        </section>
+    </div>
+{% endblock %}
