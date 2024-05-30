@@ -32,29 +32,28 @@ def get_schedule_model_for_current_day(student_id):
 def yaja_view(request):
     current_student_id = request.user.student_id
     print(current_student_id)
-    
+
     try:
-         # Try to get existing records
-         monday_schedule = Monday.objects.get(student_id=current_student_id)
-         tuesday_schedule = Tuesday.objects.get(student_id=current_student_id)
-         wednesday_schedule = Wednesday.objects.get(student_id=current_student_id)
-         print("found until wedenesday")
-         thursday_schedule = Thursday.objects.get(student_id=current_student_id)
-         print("found all objects")
+        # Try to get existing records
+        monday_schedule = Monday.objects.get(student_id=current_student_id)
+        tuesday_schedule = Tuesday.objects.get(student_id=current_student_id)
+        wednesday_schedule = Wednesday.objects.get(student_id=current_student_id)
+        print("found until wedenesday")
+        thursday_schedule = Thursday.objects.get(student_id=current_student_id)
+        print("found all objects")
     except:
-         # Create new records if they don't exist
-         monday_schedule = Monday.objects.create(student_id=current_student_id)
-         tuesday_schedule = Tuesday.objects.create(student_id=current_student_id)
-         wednesday_schedule = Wednesday.objects.create(student_id=current_student_id)
-         thursday_schedule = Thursday.objects.create(student_id=current_student_id)
-         print("created objects")
-    
+        # Create new records if they don't exist
+        monday_schedule = Monday.objects.create(student_id=current_student_id)
+        tuesday_schedule = Tuesday.objects.create(student_id=current_student_id)
+        wednesday_schedule = Wednesday.objects.create(student_id=current_student_id)
+        thursday_schedule = Thursday.objects.create(student_id=current_student_id)
+        print("created objects")
+
     schedule = get_schedule_model_for_current_day(current_student_id)
     print(schedule.period1)
     print(schedule.period2)
+
     if request.method == "PUT":
-        print("succccccsss")
-        # if 시간을 통해서 무슨 요일인지
         data = json.loads(request.body)
         print(data)
         period1 = data.get("period1")
@@ -65,41 +64,44 @@ def yaja_view(request):
         try:
             if current_day == 0:  # Monday
                 schedule = Monday.objects.get(student_id=current_student_id)
-                serializer = MondaySerializer(schedule)
+                serializer_class = MondaySerializer
 
             elif current_day == 1:
                 schedule = Tuesday.objects.get(student_id=current_student_id)
-                serializer = TuesdaySerializer(schedule)
+                serializer_class = TuesdaySerializer
 
             elif current_day == 2:
                 schedule = Wednesday.objects.get(student_id=current_student_id)
-                serializer = WednesdaySerializer(schedule)
+                serializer_class = WednesdaySerializer
 
             elif current_day == 3:
                 print("current_student_id in else statement")
                 schedule = Thursday.objects.get(student_id=current_student_id)
-                serializer = ThursdaySerializer(schedule)
+                serializer_class = ThursdaySerializer
 
             else:
                 return JsonResponse({"error": "Unsupported day"})
 
-            schedule.period1 = period1
-            schedule.period2 = period2
-            schedule.period3 = period3
-            schedule.save()
-            return JsonResponse({"status":"success"}, content_type="application/json")
+            data = {
+                "period1": period1,
+                "period2": period2,
+                "period3": period3,
+            }
+            serializer = serializer_class(schedule, data=data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse({"status": "success"}, status=200)
+            return JsonResponse(serializer.errors, status=400)
 
-        except Monday.DoesNotExist:
-            return JsonResponse({"error": "No schedule set for Monday"})
-
-        except Tuesday.DoesNotExist:
-            return JsonResponse({"error": "No schedule set for Tuesday"})
-
-        except Wednesday.DoesNotExist:
-            return JsonResponse({"error": "No schedule set for Wednesday"})
-
-        except Thursday.DoesNotExist:
-            return JsonResponse({"error": "No schedule set for Thursday"})
+        except (
+            Monday.DoesNotExist,
+            Tuesday.DoesNotExist,
+            Wednesday.DoesNotExist,
+            Thursday.DoesNotExist,
+        ):
+            return JsonResponse(
+                {"error": "No schedule set for the current day"}, status=404
+            )
 
     elif request.method == "POST":
         data = json.loads(request.body)
@@ -150,8 +152,9 @@ def yaja_view(request):
             Monday.DoesNotExist,
             Tuesday.DoesNotExist,
             Wednesday.DoesNotExist,
-            Thursday.DoesNotExist):
-            return JsonResponse({"status":"error"}, content_type="application/json")
+            Thursday.DoesNotExist,
+        ):
+            return JsonResponse({"status": "error"}, content_type="application/json")
 
         # Update the period data
         monday_schedule.period1 = monday.get("period1")
@@ -179,7 +182,7 @@ def yaja_view(request):
         serializer_wednesday = WednesdaySerializer(wednesday_schedule)
         serializer_thursday = ThursdaySerializer(thursday_schedule)
 
-       #Combine the serialized data into a response
+        # Combine the serialized data into a response
         echo_data = {
             "monday": serializer_monday.data,
             "tuesday": serializer_tuesday.data,
@@ -195,4 +198,5 @@ def yaja_view(request):
         # 아님 걍 하라 그러고
     return render(request, "yaja.html", {"Yaja": schedule})
 
-#SEXSEX
+
+# SEXSEX
