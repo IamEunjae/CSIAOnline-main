@@ -194,3 +194,5 @@ def yaja_view(request):
         # 만약 이미 있는거 부분수정하고 싶은거면 현재거를 보여지는 폼 디폴트로 설정할 수있나?
         # 아님 걍 하라 그러고
     return render(request, "yaja.html", {"Yaja": schedule})
+
+#SEXSEX
